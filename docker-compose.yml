@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  webserver:
+    image: nginx:latest
+    container_name: webserver-container
+    ports:
+      - "8080:80"
+    volumes:
+      - ./custom-index.html:/usr/share/nginx/html/index.html
+    networks:
+      - app-network
+  database:
+    image: postgres:latest
+    container_name: database-container
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: exampledb
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
